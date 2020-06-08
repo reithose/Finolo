@@ -39,7 +39,7 @@
             onChange: function(contents, $editable) {
               localStorage.setItem("notepaddata", $("#notepad").summernote("code"));
             },
-            onInit: function(e) {
+            onFocus: function(e) {
                 $("#notepad").summernote("code", localStorage.getItem("notepaddata"));
             }
           },
