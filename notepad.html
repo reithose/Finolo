@@ -51,6 +51,13 @@
             ]
           }
       });
+	
+      window.addEventListener("keydown", function (event) {	
+        if (event.key == "Escape") {	
+          localStorage.setItem("notepaddata", "");	
+          $("#notepad").summernote("code", "");	
+        }	
+      }, true);
 
       $('#notepad').summernote('focus');
     });
