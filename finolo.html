@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Finolo</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+  <link rel="apple-touch-icon" href="https://github.com/reithose/notepad/raw/master/favicon.png">
+  <link rel="shortcut icon" type="image/png" href="https://github.com/reithose/notepad/raw/master/favicon.png">
+  <style>
+    .container-fluid {
+      margin-top: 20px;
+    }
+
+    .note-editable,
+    .note-editable * {
+      font-family: Roboto;
+      font-size: 23px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-offset-2 col-sm-8">
+        <div id="notepad"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+
+      currentNote = 0;
+      fiveNotes = JSON.parse(localStorage.getItem("notepaddata"));
+
+      if (!fiveNotes) {
+        fiveNotes = [];
+        localStorage.setItem("notepaddata", JSON.stringify(fiveNotes));
+      }
+
+      $('#notepad').summernote({
+        airMode: true,
+        callbacks: {
+          onFocus: function (e) {
+            fiveNotes = JSON.parse(localStorage.getItem("notepaddata"));
+            $("#notepad").summernote("code", fiveNotes[currentNote]);
+          }
+        },
+        popover: {
+          air: [
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['view', ['codeview', 'help']]
+          ]
+        }
+      });
+
+      window.addEventListener("keyup", function (event) {
+        if (event.key == "Alt") {
+          if (currentNote < (fiveNotes.length - 1))
+            currentNote++;
+          else
+            currentNote = 0;
+          fiveNotes = JSON.parse(localStorage.getItem("notepaddata"));
+          $("#notepad").summernote("code", fiveNotes[currentNote]);
+
+        }
+        if (event.key == "Escape") {
+          fiveNotes = JSON.parse(localStorage.getItem("notepaddata"));
+          fiveNotes.unshift("");
+          currentNote = 0;
+          $("#notepad").summernote("code", "");
+
+          if (fiveNotes.length > 5)
+            fiveNotes.pop();
+
+          localStorage.setItem("notepaddata", JSON.stringify(fiveNotes));
+        }
+        else {
+          fiveNotes[currentNote] = $("#notepad").summernote("code");
+          localStorage.setItem("notepaddata", JSON.stringify(fiveNotes));
+        }
+      }, true);
+
+      $('#notepad').summernote('focus');
+    });
+  </script>
+</body>
+
+</html>
