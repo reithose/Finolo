@@ -8,4 +8,4 @@ Single file notepad application.  Uses [Summernote](https://github.com/summernot
 - Press "Esc" to start a new note. If you have five or more notes, your oldest note will be deleted
 - Press "Alt" to cycle through your five notes.
 
-[Demo](https://reithose.github.io/finolo/finolo.html)
+[Demo](https://reithose.github.io/Finolo/finolo.html)
