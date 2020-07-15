@@ -37,10 +37,10 @@
     $(document).ready(function () {
 
       currentNote = 0;
-	    try{
-		    fiveNotes = JSON.parse(localStorage.getItem("notepaddata"));
-	    }
-	    catch{
+      try {
+        fiveNotes = JSON.parse(localStorage.getItem("notepaddata"));
+      }
+      catch{
         fiveNotes = [];
         localStorage.setItem("notepaddata", JSON.stringify(fiveNotes));
       }
@@ -52,7 +52,7 @@
             fiveNotes = JSON.parse(localStorage.getItem("notepaddata"));
             $("#notepad").summernote("code", fiveNotes[currentNote]);
           },
-	  onPaste: function (e) {
+          onPaste: function (e) {
             var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
             e.preventDefault();
             document.execCommand('insertText', false, bufferText);
